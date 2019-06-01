@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from pages.views import register_view, dashboard_view, login_view, logout_view
+from my_apis.views import update_flavors
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path('', login_view, name="login"),
     path('dashboard/', dashboard_view, name="dashboard"),
     path('logout/', logout_view, name="logout"),
+    path('update/', update_flavors, name="flavors"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

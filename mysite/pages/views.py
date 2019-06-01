@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from my_apis.models import Flavor
 
 # Create your views here.
 
@@ -49,7 +50,9 @@ def register_view(request, *args, **kwargs):
 def dashboard_view(request, *args, **kwargs):
     if not request.user.is_authenticated:
         return redirect('login')
-    return render(request, "dashboard.html", {})
+
+    flavors = Flavor.objects.all()
+    return render(request, "dashboard.html", {'flavors':flavors})
 
 def login_view(request, *args, **kwargs):
     if request.user.is_authenticated:

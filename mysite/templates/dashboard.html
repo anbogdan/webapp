@@ -31,6 +31,9 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav no-borders">
                     <li class="dropdown">
+                        <h3><span class="label"> Welcome, {{ user.get_username|title }} </span></h3>
+                    </li>
+                    <li class="dropdown">
                         <a href="{% url 'logout' %}">
                             <i class="pe-7s-upload pe-rotate-90"></i>
                         </a>
@@ -53,6 +56,15 @@
     </aside>
     <div id="wrapper">
         <div class="content">
+            {% for flavor in flavors %}
+                <h3>{{ flavor.name }}</h3>
+                <ul>
+                    <li>{{ flavor.ram }} MB</li>
+                    <li>{{ flavor.disk }} GB</li>
+                    <li>{{ flavor.vcpu }}</li>
+                    <li>{{ flavor.flv_id }}</li>
+                </ul>
+            {% endfor %}
         </div>
         <footer class="footer">
             <span class="pull-right">
