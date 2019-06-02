@@ -1,0 +1,5 @@
+openstack:
+  keystone-url: 'https://cloud-controller.grid.pub.ro:5000'
+  keystone-username: 'nicolae.androne'
+  keystone-password: 'B0B0.23o996'
+  project: 'nicolae.androne_prj'
