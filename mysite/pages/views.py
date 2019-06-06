@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import RegisterForm, LoginForm
+from .models import RegisterForm, LoginForm, AddAppForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from my_apis.models import Flavor
+from my_models.models import Application
 
 # Create your views here.
 
@@ -51,8 +51,8 @@ def dashboard_view(request, *args, **kwargs):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    flavors = Flavor.objects.all()
-    return render(request, "dashboard.html", {'flavors':flavors})
+    applications = Application.objects.filter(user=request.user)
+    return render(request, "dashboard.html", {'applications':applications})
 
 def login_view(request, *args, **kwargs):
     if request.user.is_authenticated:
@@ -82,3 +82,35 @@ def logout_view(request, *args, **kwargs):
     if request.user.is_authenticated:
         logout(request)
     return redirect('login')
+
+def add_application_view(request, *args, **kwargs):
+    template = 'addapplication.html'
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AddAppForm(request.POST)
+            if form.is_valid():
+                if Application.objects.filter(name=form.cleaned_data['name'].capitalize(), user=request.user).exists():
+                    return render(request, template, {
+                        'form': form,
+                        'error_message': 'Application already exists.'
+                    })
+                else:
+                    entry = Application(
+                        name=form.cleaned_data['name'].capitalize(),
+                        flv=form.cleaned_data['flv'],
+                        user=request.user,
+                        allocated=False,
+                        ip='none',
+                        repo=form.cleaned_data['repo'],
+                        status='no status'
+                    )
+                    entry.save()
+                    return redirect('dashboard')
+        else:
+            form = AddAppForm()
+        return render(request, template, {'form': form})
+
+def allocate_app_view(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AddAppForm(request.POST)

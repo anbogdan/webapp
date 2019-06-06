@@ -3,3 +3,4 @@ openstack:
   keystone-username: 'nicolae.androne'
   keystone-password: 'B0B0.23o996'
   project: 'nicolae.androne_prj'
+  default-image: 'Centos 7'
