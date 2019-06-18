@@ -2,12 +2,13 @@
 - hosts: all
   remote_user: student
   become: yes
+  become-user: root
+  become-method: su
   tasks:
   - name: Installing git
     yum:
        name: git
        state: latest
-       become-user: root
   - name: Clone app from repo
     git:
        repo: 'https://github.com/anbogdan/webapp.git'
