@@ -19,3 +19,6 @@ class AddAppForm(Form):
     name = CharField(widget=TextInput(attrs={'class': 'form-control'}))
     flv = ModelChoiceField(widget=RadioSelect, queryset=Flavor.objects, empty_label=None)
     repo = CharField(widget=TextInput(attrs={'class': 'form-control'}))
+
+class AllocateAppForm(Form):
+    app_name = CharField(widget=TextInput)

@@ -1,5 +1,6 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import RegisterForm, LoginForm, AddAppForm
+from .models import RegisterForm, LoginForm, AddAppForm, AllocateAppForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from my_models.models import Application
@@ -113,4 +114,10 @@ def add_application_view(request, *args, **kwargs):
 def allocate_app_view(request, *args, **kwargs):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            form = AddAppForm(request.POST)
+            form = AllocateAppForm(request.POST)
+            if form.is_valid():
+                entry = Application.objects.get(name=form.cleaned_data['app_name'].capitalize())
+                entry.status = 'pending'
+                entry.save()
+                return redirect('dashboard')
+    return HttpResponse('DENIED')

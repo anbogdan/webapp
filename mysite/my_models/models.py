@@ -20,4 +20,5 @@ class Application(models.Model):
     allocated = models.BooleanField()
     ip = models.CharField(max_length=15)
     repo = models.CharField(max_length=100)
-    status = models.CharField(max_length=10)
+    status = models.CharField(max_length=20)
+    action = models.CharField(max_length=20)
