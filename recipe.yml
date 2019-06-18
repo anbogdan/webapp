@@ -4,11 +4,10 @@
   become: yes
   tasks:
   - name: Installing git
-    become_user: root
-    become_method: su
     yum:
        name: git
        state: latest
+    become_user: root
   - name: Clone app from repo
     git:
        repo: 'https://github.com/anbogdan/webapp.git'
