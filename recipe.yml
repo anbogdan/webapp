@@ -2,7 +2,6 @@
 - hosts: all
   remote_user: student
   become: yes
-  become-user: root
   become-method: su
   tasks:
   - name: Installing git
