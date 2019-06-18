@@ -10,5 +10,5 @@
     become_user: root
   - name: Clone app from repo
     git:
-       repo: 'git@github.com:anbogdan/dummy.git'
+       repo: 'https://github.com/anbogdan/dummy.git'
        dest: /home/student/app
