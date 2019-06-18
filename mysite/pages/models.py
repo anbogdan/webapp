@@ -1,4 +1,5 @@
-from django.forms import Form, CharField, EmailField, TextInput, PasswordInput, EmailInput, RadioSelect, ModelChoiceField
+from django.forms import Form, CharField, EmailField, TextInput, PasswordInput, EmailInput, RadioSelect, \
+    ModelChoiceField, Textarea
 from my_models.models import Flavor
 
 
@@ -22,3 +23,6 @@ class AddAppForm(Form):
 
 class AllocateAppForm(Form):
     app_name = CharField(widget=TextInput)
+
+class AddSshKey(Form):
+    sshkey = CharField(widget=Textarea)

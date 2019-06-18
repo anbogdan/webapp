@@ -56,6 +56,11 @@
                         <span class="nav-label">Add application</span>
                     </a>
                 </li>
+                <li>
+                    <a href='{% url "sshkey" %}'>
+                        <span class="nav-label">Add sshkey</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </aside>
@@ -99,12 +104,6 @@
                 </div>
              </div>
         </div>
-        <footer class="footer">
-            <span class="pull-right">
-                Exclusive Admin
-            </span>
-            Powered By devdap.com
-        </footer>
     </div>
     <script src='{% static "vendor/jquery/dist/jquery.min.js"%}'></script>
     <script src='{% static "vendor/jquery-ui/jquery-ui.min.js"%}'></script>

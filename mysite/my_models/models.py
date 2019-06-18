@@ -22,3 +22,7 @@ class Application(models.Model):
     repo = models.CharField(max_length=100)
     status = models.CharField(max_length=20)
     action = models.CharField(max_length=20)
+
+class SshKey(models.Model):
+    sshkey = models.CharField(max_length=1024)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

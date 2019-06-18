@@ -45,7 +45,7 @@
     <aside id="menu">
         <div id="navigation">
             <ul class="nav" id="side-menu">
-                <li class="active">
+                <li>
                     <a href='{% url "dashboard" %}'>
                         <span class="nav-label">Dashboard</span>
                         <span class="label label-success pull-right">v.1</span>
@@ -54,9 +54,10 @@
                 <li>
                     <a href='{% url "addapp" %}'>
                         <span class="nav-label">Add application</span>
+                        <span class="label label-success pull-right">v.1</span>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href='{% url "sshkey" %}'>
                         <span class="nav-label">Add sshkey</span>
                     </a>
@@ -66,68 +67,33 @@
     </aside>
     <div id="wrapper">
         <div class="content">
-            {% for app in applications %}
             <div class="hpanel">
-                 <div class="panel-heading hbuilt">
-                    <div class="panel-tools">
-                       <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                       <a class="closebox"><i class="fa fa-times"></i></a>
-                    </div>
-                     {{ app.name }}
-                 </div>
-                 <div class="panel-body">
-                    <div class="col-lg-3 border-right">
-                        Flavor:
-                        <ul>
-                            <li>
-                                {{ app.flv }}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 border-right">
-                        Status
-                        <ul>
-                            <li>
-                                {{ app.status }}
-                            </li>
-                        </ul>
-                    </div>
-                     <div class="col-lg-3 border-right">
-                        Machine IP
-                        <ul>
-                            <li>
-                                {{ app.ip }}
-                            </li>
-                        </ul>
-                    </div>
-                     {% if app.status == 'no status' %}
-                     <div class="text-center">
-                         <form action='{% url "allocateapp" %}' method="post" target="_self">
-                             {% csrf_token %}
-                             <input type="hidden" name="app_name" value="{{ app.name }}">
-                             <button class="btn btn-outline btn-success">
-                                 Allocate
-                             </button>
-                         </form>
-                     </div>
-                     {% elif app.status == 'ready' %}
-                     <div class="text-center">
-                         <form action='{% url "allocateapp" %}' method="post" target="_self">
-                             {% csrf_token %}
-                             <input type="hidden" name="app_name" value="{{ app.name }}">
-                             <button class="btn btn-outline btn-danger">
-                                 Deallocate
-                             </button>
-                         </form>
-                     </div>
-                     {% else %}
-                     <div class="text-center">
-                         <p><i>-allocating-</i></p>
-                     </div>
-                     {% endif %}
-                 </div>
-              </div>
-            {% endfor %}
+                <div class="panel-heading">
+                   <div class="panel-tools">
+                      <a class="showhide"><i class="fa fa-chevron-up"></i></a>
+                      <a class="closebox"><i class="fa fa-times"></i></a>
+                   </div>
+                   Add application
+                </div>
+                <div class="panel-body">
+                    {% if error_message %}
+                            <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+                    {% endif %}
+                   <form action='{% url "sshkey" %}' method="post" class="form-horizontal">
+                       {% csrf_token %}
+                      <div class="form-group">
+                         <label class="col-sm-2 control-label">Sshkey</label>
+                          <div class="col-sm-10"> {{ form.sshkey }} </div>
+                      </div>
+                       <div class="hr-line-dashed"></div>
+                      <div class="form-group">
+                         <div class="col-sm-8 col-sm-offset-2">
+                            <button class="btn btn-primary" type="submit">Save key</button>
+                         </div>
+                      </div>
+                   </form>
+                </div>
+             </div>
         </div>
     </div>
     <script src='{% static "vendor/jquery/dist/jquery.min.js"%}'></script>

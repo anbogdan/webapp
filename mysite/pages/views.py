@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import RegisterForm, LoginForm, AddAppForm, AllocateAppForm
+from .models import RegisterForm, LoginForm, AddAppForm, AllocateAppForm, AddSshKey
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from my_models.models import Application
+from my_models.models import Application, SshKey
+
 
 # Create your views here.
 
@@ -121,3 +122,24 @@ def allocate_app_view(request, *args, **kwargs):
                 entry.save()
                 return redirect('dashboard')
     return HttpResponse('DENIED')
+
+def add_sshkey_view(request, *args, **kwargs):
+    template = 'addsshkey.html'
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AddSshKey(request.POST)
+            if form.is_valid():
+                if SshKey.objects.filter(user=request.user).exists():
+                    entry = SshKey.objects.get(user=request.user)
+                    entry.sshkey = form.cleaned_data['sshkey']
+                    entry.save()
+                    return redirect('dasboard')
+                entry = SshKey(
+                    sshkey=form.cleaned_data['sshkey'],
+                    user=request.user
+                )
+                entry.save()
+                return redirect('dashboard')
+        else:
+            form = AddSshKey()
+        return render(request, template, {'form': form})
