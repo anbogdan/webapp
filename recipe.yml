@@ -11,5 +11,5 @@
   - name: Clone app from repo
     git:
        repo: 'https://github.com/anbogdan/webapp.git'
-       dest: /home/student
+       dest: /home/student/app
        version: master
