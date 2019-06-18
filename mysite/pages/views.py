@@ -116,7 +116,7 @@ def allocate_app_view(request, *args, **kwargs):
         if request.method == 'POST':
             form = AllocateAppForm(request.POST)
             if form.is_valid():
-                entry = Application.objects.get(name=form.cleaned_data['app_name'].capitalize())
+                entry = Application.objects.get(name=form.cleaned_data['app_name'].capitalize(), user=request.user)
                 entry.status = 'pending'
                 entry.save()
                 return redirect('dashboard')

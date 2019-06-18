@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from pages.views import register_view, dashboard_view, login_view, logout_view, add_application_view, allocate_app_view
-from my_apis.views import update_flavors, api_allocate_app
+from my_apis.views import update_flavors
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
@@ -29,7 +29,6 @@ urlpatterns = [
     path('logout/', logout_view, name="logout"),
     path('update/', update_flavors, name="flavors"),
     path('addapplication/', add_application_view, name="addapp"),
-    path('api/allocateapp/', api_allocate_app, name="api_allocateapp"),
     path('allocateapp/', allocate_app_view, name="allocateapp"),
 ]
 
