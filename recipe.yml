@@ -4,6 +4,8 @@
   become: yes
   tasks:
   - name: Installing git
+    become_user: root
+    become_method: su
     yum:
        name: git
        state: latest
