@@ -27,5 +27,7 @@
     become_user: root
   - name: Install requirements
     command: pip3 install -r /var/www/requirements.txt
+    become: yes
+    become_user: root
   - name: Run server
     shell: python /var/www/webapp/mysite/manage.py runserver </dev/null >/dev/null 2>&1 &
