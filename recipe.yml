@@ -13,7 +13,7 @@
       state: latest
     become: yes
     become_user: root
-  - name: Install python3
+  - name: Install python36
     yum:
       name: python3
       state: latest
