@@ -15,7 +15,7 @@
     become_user: root
   - name: Install python36
     yum:
-      name: python3
+      name: python36
       state: latest
     become: yes
     become_user: root
