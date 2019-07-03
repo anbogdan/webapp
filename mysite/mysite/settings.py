@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'pages',
     'my_apis',
     'my_models',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

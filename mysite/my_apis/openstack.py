@@ -80,7 +80,7 @@ def create_vm(session, server_name, image_id, flavor_id, meta=None, timeout=None
         security_groups=['default']
     )
 
-    print('Waiting for server %s to become active' % server.id)
+    print('Waiting for server %s to become active.' % server.id)
     start_time = time.time()
     while True:
         if server.status == 'ACTIVE':
@@ -95,7 +95,7 @@ def create_vm(session, server_name, image_id, flavor_id, meta=None, timeout=None
                 raise Exception('Timeout waiting for server to become active (%.2f sec)' % duration)
         time.sleep(1)
         server = nova_client.servers.get(server.id)
-
+    print('Server %s is active.' % server.id)
     return server
 
 

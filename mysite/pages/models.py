@@ -25,4 +25,4 @@ class AllocateAppForm(Form):
     app_name = CharField(widget=TextInput)
 
 class AddSshKey(Form):
-    sshkey = CharField(widget=Textarea)
+    sshkey = CharField(widget=Textarea(attrs={'rows':10, 'cols':35}))

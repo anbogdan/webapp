@@ -1,0 +1,28 @@
+- hosts: all
+  remote_user: student
+  tasks:
+  - name: Create user
+    user:
+      name: ''
+      groups: wheel
+      append: yes
+      state: present
+      shell: /bin/bash
+    become: yes
+    become_user: root
+  - name: Set authorized key taken from file
+    authorized_key:
+      user: ''
+      state: present
+      key: ''
+    become: yes
+    become_user: root
+  - name: Allow 'wheel' group to have passwordless sudo
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%wheel'
+      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      validate: 'visudo -cf %s'
+    become: yes
+    become_user: root

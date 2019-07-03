@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import RegisterForm, LoginForm, AddAppForm, AllocateAppForm, AddSshKey
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from my_models.models import Application, SshKey
+from my_models.models import Application, SshKey, Flavor
 
 
 # Create your views here.
@@ -97,14 +97,17 @@ def add_application_view(request, *args, **kwargs):
                         'error_message': 'Application already exists.'
                     })
                 else:
+                    flv = Flavor.objects.get(name=form.cleaned_data['flv'])
                     entry = Application(
                         name=form.cleaned_data['name'].capitalize(),
-                        flv=form.cleaned_data['flv'],
+                        flv=flv,
                         user=request.user,
                         allocated=False,
-                        ip='none',
+                        ip='-',
                         repo=form.cleaned_data['repo'],
-                        status='no status'
+                        status='no status',
+                        action='none',
+                        server_id='none'
                     )
                     entry.save()
                     return redirect('dashboard')
@@ -119,6 +122,19 @@ def allocate_app_view(request, *args, **kwargs):
             if form.is_valid():
                 entry = Application.objects.get(name=form.cleaned_data['app_name'].capitalize(), user=request.user)
                 entry.status = 'pending'
+                entry.action = 'allocate'
+                entry.save()
+                return redirect('dashboard')
+    return HttpResponse('DENIED')
+
+def deallocate_app_view(request, *args, **kwargs):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AllocateAppForm(request.POST)
+            if form.is_valid():
+                entry = Application.objects.get(name=form.cleaned_data['app_name'].capitalize(), user=request.user)
+                entry.status = 'pending'
+                entry.action = 'deallocate'
                 entry.save()
                 return redirect('dashboard')
     return HttpResponse('DENIED')

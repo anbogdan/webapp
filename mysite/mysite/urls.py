@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from pages.views import register_view, dashboard_view, login_view, logout_view, add_application_view, allocate_app_view, add_sshkey_view
-from my_apis.views import update_flavors
+from pages.views import register_view, dashboard_view, login_view, logout_view, add_application_view, allocate_app_view,\
+    add_sshkey_view, deallocate_app_view
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
@@ -27,10 +27,10 @@ urlpatterns = [
     path('', login_view, name="login"),
     path('dashboard/', dashboard_view, name="dashboard"),
     path('logout/', logout_view, name="logout"),
-    path('update/', update_flavors, name="flavors"),
     path('addapplication/', add_application_view, name="addapp"),
     path('allocateapp/', allocate_app_view, name="allocateapp"),
     path('sshkey/', add_sshkey_view, name="sshkey"),
+    path('deallocateapp/', deallocate_app_view, name="deallocateapp"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

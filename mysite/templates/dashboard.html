@@ -112,7 +112,7 @@
                      </div>
                      {% elif app.status == 'ready' %}
                      <div class="text-center">
-                         <form action='{% url "allocateapp" %}' method="post" target="_self">
+                         <form action='{% url "deallocateapp" %}' method="post" target="_self">
                              {% csrf_token %}
                              <input type="hidden" name="app_name" value="{{ app.name }}">
                              <button class="btn btn-outline btn-danger">
@@ -120,10 +120,16 @@
                              </button>
                          </form>
                      </div>
-                     {% else %}
-                     <div class="text-center">
-                         <p><i>-allocating-</i></p>
-                     </div>
+                     {% else%}
+                        {% if app.action == 'allocate' %}
+                             <div class="text-center">
+                                 <p><i>-allocating-</i></p>
+                             </div>
+                        {% else %}
+                            <div class="text-center">
+                                 <p><i>-deallocating-</i></p>
+                            </div>
+                        {% endif %}
                      {% endif %}
                  </div>
               </div>
